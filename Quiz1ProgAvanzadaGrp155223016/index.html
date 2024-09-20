@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudiantes</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+    <h1>Estudiantes</h1>
+    <div class="container">
+        <table id="listaEstudiantes">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>1 20%</th>
+                    <th>2 20%</th>
+                    <th>3 20%</th>
+                    <th>40%</th>
+                    <th>Definitiva</th>
+                    <th>Aprueba/No aprueba</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <form name="registroForm" id="registroFormulario">
+            <br>
+            <div>
+                <label>Codigo:</label>
+                <input type="number" name="codigo" id="codigo" required>
+                <div id="codigoRep"></div>
+            </div>
+            <br>
+            <div>
+                <label>Nombre:</label>
+                <input type="text" name="nombre" id="nombre" required>
+            </div>
+            <br>
+            <div>
+                <label>1 20%:</label>
+                <input type="number" name="pvein" step="0.01" min="0" max="5" required>
+                <div id="validarPvein"></div>
+            </div>
+            <br>
+            <div>
+                <label>2 20%:</label>
+                <input type="number" name="svein" step="0.01" min="0" max="5" required>
+                <div id="validarSvein"></div>
+            </div>
+            <br>
+            <div>
+                <label>3 20%:</label>
+                <input type="number" name="tvein" step="0.01" min="0" max="5" required>
+                <div id="validarTvein"></div>
+            </div>
+            <br>
+            <div>
+                <label>40%:</label>
+                <input type="number" name="cuar" step="0.01" min="0" max="5" required>
+                <div id="validarCuar"></div>
+            </div>
+            <br>
+            <div>
+                <button type="submit" id="guardar">Guardar</button>
+            </div>
+            <br>
+        </form>
+    </div>
+    <script src="JS/app.js"></script>
+</body>
+</html>
