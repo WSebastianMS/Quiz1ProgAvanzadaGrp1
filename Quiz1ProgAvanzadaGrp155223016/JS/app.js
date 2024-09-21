@@ -3,7 +3,7 @@ const codigoRep = document.getElementById("codigoRep");
 const codigoJ = document.getElementById("codigo");
 const listaEstudiantes = document.getElementById('listaEstudiantes');
 
-function mostrarVentanaEmergente(mensaje) {
+function mostrarVentanaEmergente(mensaje, onConfirm) {
     const modal = document.createElement('div');
     modal.style.position = 'fixed';
     modal.style.top = '50%';
@@ -11,12 +11,35 @@ function mostrarVentanaEmergente(mensaje) {
     modal.style.transform = 'translate(-50%, -50%)';
     modal.style.backgroundColor = '#fff';
     modal.style.padding = '20px';
-    modal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-    modal.innerHTML = `<p>${mensaje}</p><button id="cerrarModal">Cerrar</button>`;
+    modal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 1)';
+
+    if(mensaje === "El código ya existe. Por favor, ingrese un código diferente."){
+
+        modal.innerHTML = `
+        <p>${mensaje}</p>
+        <button id="confirmar" hidden >Sí</button>
+        <button id="cancelar">Ok</button>
+    `;
+
+    }else{
+
+        modal.innerHTML = `
+        <p>${mensaje}</p>
+        <button id="confirmar">Sí</button>
+        <button id="cancelar">No</button>
+    `;
+    }
+    
+    
 
     document.body.appendChild(modal);
 
-    document.getElementById('cerrarModal').addEventListener('click', () => {
+    document.getElementById('confirmar').addEventListener('click', () => {
+        onConfirm();
+        document.body.removeChild(modal);
+    });
+
+    document.getElementById('cancelar').addEventListener('click', () => {
         document.body.removeChild(modal);
     });
 }
@@ -49,8 +72,11 @@ const cargarEstudiante = (estudiante) => {
     const eliminarBtn = document.createElement('button');
     eliminarBtn.textContent = "Eliminar";
     eliminarBtn.addEventListener('click', () => {
-        row.classList.add('fade');
-        setTimeout(() => row.remove(), 1000);
+        const nombreEstudiante = estudiante.nombre; // Guarda el nombre del estudiante
+        mostrarVentanaEmergente(`¿Está seguro de que quiere eliminar al estudiante ${nombreEstudiante}?`, () => {
+            row.classList.add('fade');
+            setTimeout(() => row.remove(), 1000);
+        });
     });
     btnCeld.appendChild(eliminarBtn);
 
@@ -84,7 +110,9 @@ const cargarEstudiante = (estudiante) => {
     row.appendChild(definitivaCeld);
     row.appendChild(apruebaCeld);
 
+    row.classList.add('fadeIn');
     const tbody = listaEstudiantes.getElementsByTagName('tbody')[0];
+    listaEstudiantes.classList.remove('fadeIn')
     tbody.appendChild(row);
 };
 
@@ -131,4 +159,12 @@ registroForm.addEventListener("submit", (event) => {
     cargarEstudiante(estudiante);
 
     registroForm.reset();
+});
+
+const notaInputs = document.querySelectorAll('input[name="pvein"], input[name="svein"], input[name="tvein"], input[name="cuar"]');
+
+notaInputs.forEach(input => {
+    input.addEventListener('input', () => {
+        validarNota(parseFloat(input.value), `validar${input.name.charAt(0).toUpperCase() + input.name.slice(1)}`);
+    });
 });

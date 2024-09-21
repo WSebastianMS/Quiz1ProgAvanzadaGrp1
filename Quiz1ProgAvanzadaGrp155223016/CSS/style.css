@@ -34,6 +34,18 @@ form div {
     }
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
 .fade {
     animation: fadeOut 1s forwards;
+}
+.fadeIn {
+    animation: fadeIn 1s forwards;
 }
